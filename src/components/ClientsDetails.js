@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
 @inject('cs')
 @observer
 class ClientsDetails extends Component {
+   constructor(){
+   super()
+    this.state={
+        seen:false
+     }
+}
+  
+
+    updateUser=(e)=>{
+
+       console.log(e.currentTarget.id)
+    this.props.cs.updateUser(e.currentTarget.id)
+   }
+   togglePop=()=>{
+    this.setState({
+        seen: !this.state.seen
+       });
+   }
+   
     render() {
     
-
+        
         return (
             // <tr className="clientRow" onClick={this.changeProp}>
             //     <th>{this.props.item.name}</th>
@@ -22,17 +35,21 @@ class ClientsDetails extends Component {
             //     <th>{this.props.item.owner}</th>
             //     <th>{this.props.item.country}</th>
             // </tr>
-            <TableRow key="{row.name}">
-              <TableCell align="right">{this.props.item.name}</TableCell>
-              <TableCell align="right">{this.props.item.sName}</TableCell>
-              <TableCell align="right">{this.props.item.country}</TableCell>
-              <TableCell align="right">{this.props.item.firstContact}</TableCell>
-              <TableCell align="right">{this.props.item.email}</TableCell>
-              <TableCell align="right">{this.props.item.sold ==1 ? '✔': '-'}</TableCell>
-              <TableCell align="right">{this.props.item.owner}</TableCell>
-            </TableRow>
+            <tr>
+            <td>{this.props.item.name}</td>
+            <td>{this.props.item.sName}</td>
+            <td>{this.props.item.country}</td>
+            <td>{this.props.item.firstContact}</td>
+            <td>{this.props.item.email}</td>
+            <td>{this.props.item.sold ==1 ? '✔': '-'}</td>
+            <td>{this.props.item.owner}</td>
+            </tr>
+            //   {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
+         
+            
         );
     }
 }
+
 
 export default ClientsDetails;

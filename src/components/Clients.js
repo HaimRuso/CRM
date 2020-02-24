@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
+import './../App.css';
 import ClientsDetails from './ClientsDetails'
 import { observer, inject } from 'mobx-react'
-import { TablePagination } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Table from 'react-bootstrap/Table'
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+  
 @inject('cs')
 @observer
 class Clients extends Component {
@@ -17,8 +15,57 @@ class Clients extends Component {
         super();
         this.state = {
             testText: "",
-            category: "Name"
+            category: "Name",
+            index:0,
+            showenClients:[]
         }
+    }
+    componentDidMount=()=>{
+        this.setState({
+            index:0
+        })
+      this.retClientsNext()  
+    }
+    retClientsNext=()=>{
+        if(this.props.cs.clients.length-this.state.index<=0){
+            return
+        }
+        let temp=[]
+        for(let i=this.state.index; i<this.state.index+20&& i<this.props.cs.clients.length; i++){
+            temp.push(this.props.cs.clients[i])
+        }
+        let range=this.props.cs.clients.length-this.state.index
+        if(range>20){
+        this.setState({
+            showenClients:temp,
+            index: this.state.index+20
+        })
+    }
+    else{
+        this.setState({
+            showenClients:temp,
+            index: this.state.index+range
+        })
+    }
+    }
+    retClientsBack=()=>{
+        console.log(this.state.index)
+        
+        if(this.state.index>20){
+            console.log("Dd")
+        }
+        else{
+            return
+        }
+        let temp=[]
+        for(let i=this.state.index-1; i>0 && i>this.state.index-20 && this.props.cs.clients.length>=0 ; i--){
+            temp.push(this.props.cs.clients[i])
+        }
+        this.setState({
+            showenClients:temp,
+            index: this.state.index-20
+        })
+
     }
     category = (e) => {
         this.setState({
@@ -26,8 +73,7 @@ class Clients extends Component {
         })
     }
     search = (e) => {
-        console.log(e.target.value)
-        console.log(this.state.category)
+        this.props.cs.searchByCategory(this.state.category,e.target.value )
     }
 
     render() {
@@ -38,37 +84,30 @@ class Clients extends Component {
                     <option>Country</option>
                 </select>
                 <input type="text" onChange={this.search} />
-     
-                {/* <table>
-                    <tr className='title'>
-                        <th>name </th>
-                        <th>Email </th>
-                        <th>First Contact </th>
-                        <th>Sold </th>
-                        <th>Owner </th>
-                        <th>Country </th>
-                    </tr>
-                </table> */}
-    <TableContainer component={Paper}>
-    <Table className="{classes.table}" size="small" aria-label="a dense table">
-      <TableHead>
-        <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell align="right">Surname</TableCell>
-          <TableCell align="right">Country</TableCell>
-          <TableCell align="right">First Contact</TableCell>
-          <TableCell align="right">Email</TableCell>
-          <TableCell align="right">Sold</TableCell>
-          <TableCell align="right">Owner</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-                {this.props.cs.clients.map(e => <ClientsDetails item={e} />)}
-        </TableBody>
-      </Table>
-      </TableContainer>
+    <span className="nav" onClick={this.retClientsBack}> <i class="fa fa-angle-left"></i></span>
+    <span className="nav"  onClick={this.retClientsNext}>  {this.state.index-20>=0 ? this.state.index-20: null } ... {this.state.index} <i class="fa fa-angle-right"></i></span>
+ 
+      <Table  responsive striped bordered hover>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Country</th>
+      <th scope="col">First Contact</th>
+      <th scope="col">Email</th>
+      <th scope="col">Sold</th>
+      <th scope="col">Owner</th>
+    </tr>
+  </thead>
+  <tbody>
       
-                </div>
+  {this.state.showenClients.map(e => <ClientsDetails item={e} />)}
+  
+  </tbody>
+</Table>
+                
+      
+      </div>
         );
     }
 }

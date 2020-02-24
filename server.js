@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 4200
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
 
@@ -16,11 +16,21 @@ app.use(function (req, res, next) {
 
 app.get('/clients', (req, res) =>
 sequelize
-.query(`SELECT * FROM clients , countries, email_type, owners WHERE
+.query(`SELECT clients.id, clients.c_name, clients.sname, clients.email,
+clients.firstContact, clients.sale_status, email_type.e_type, owners.o_name, countries.country FROM clients, countries, email_type, owners WHERE
  clients.country=countries.id AND clients.owner=owners.id AND clients.email_type=email_type.id `)
 .then(function (result) {
-  console.log(result)
     res.send(result)
+}))
+
+app.get('/filterdClients/:category/:name', (req, res)=>
+sequelize
+.query(`SELECT clients.id, clients.c_name, clients.sname, clients.email,
+clients.firstContact, clients.sale_status, email_type.e_type, owners.o_name, countries.country FROM clients, countries, email_type, owners 
+WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`)
+.then(function (result) {
+    
+  res.send(result)
 }))
 
 
@@ -28,9 +38,17 @@ sequelize
 app.post('/', function (req, res) {
   res.send('Got a POST request')
 })
-app.put('/user', function (req, res) {
-  res.send('Got a PUT request at /user')
+app.put('/user/:id', function (req, res) {
+  console.log(req.params.id)
+  sequelize
+.query(`SELECT * FROM clients WHERE id=${req.params.id} `)
+.then(function (result) {
+  console.log(result)
+    res.send(result)
+}
+)
 })
+
 
 app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user')

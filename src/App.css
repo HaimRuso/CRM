@@ -27,5 +27,12 @@ table{
   padding: 0;
   overflow: hidden;
   background-color: rgb(255, 230, 0);
+}
 
+.nav{
+text-align: center;
+}
+
+thead{
+  background-color: rgb(245, 229, 5);
 }
