@@ -30,9 +30,13 @@ table{
 }
 
 .nav{
-text-align: center;
+align-items: center;
 }
 
 thead{
   background-color: rgb(245, 229, 5);
+}
+.action{
+  background-color:lightcyan;
+  height: 100vh;
 }

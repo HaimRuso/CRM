@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-
+import moment from 'moment'
 @inject('cs')
 @observer
 class ClientsDetails extends Component {
@@ -13,8 +13,7 @@ class ClientsDetails extends Component {
   
 
     updateUser=(e)=>{
-
-       console.log(e.currentTarget.id)
+    console.log(e.currentTarget.id)
     this.props.cs.updateUser(e.currentTarget.id)
    }
    togglePop=()=>{
@@ -39,7 +38,7 @@ class ClientsDetails extends Component {
             <td>{this.props.item.name}</td>
             <td>{this.props.item.sName}</td>
             <td>{this.props.item.country}</td>
-            <td>{this.props.item.firstContact}</td>
+            <td>{moment(this.props.item.firstContact).utc().format('DD-MM-YYYY')}</td>
             <td>{this.props.item.email}</td>
             <td>{this.props.item.sold ==1 ? '✔': '-'}</td>
             <td>{this.props.item.owner}</td>

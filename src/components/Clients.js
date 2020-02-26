@@ -5,109 +5,136 @@ import { observer, inject } from 'mobx-react'
 import Table from 'react-bootstrap/Table'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 
 
-  
 @inject('cs')
 @observer
 class Clients extends Component {
     constructor() {
         super();
         this.state = {
-            testText: "",
+            text: "",
             category: "Name",
-            index:0,
-            showenClients:[]
+            indexStart: 0,
+            indexEnd: 19,
+            showenClients: []
         }
     }
-    componentDidMount=()=>{
+    componentDidMount = async () => {
+        await this.props.cs.getClients()
+        this.showFirstPage()
+    }
+    showFirstPage = () => {
         this.setState({
-            index:0
+            indexStart: 0,
+            indexEnd: 19
         })
-      this.retClientsNext()  
-    }
-    retClientsNext=()=>{
-        if(this.props.cs.clients.length-this.state.index<=0){
-            return
-        }
-        let temp=[]
-        for(let i=this.state.index; i<this.state.index+20&& i<this.props.cs.clients.length; i++){
-            temp.push(this.props.cs.clients[i])
-        }
-        let range=this.props.cs.clients.length-this.state.index
-        if(range>20){
-        this.setState({
-            showenClients:temp,
-            index: this.state.index+20
-        })
-    }
-    else{
-        this.setState({
-            showenClients:temp,
-            index: this.state.index+range
-        })
-    }
-    }
-    retClientsBack=()=>{
-        console.log(this.state.index)
-        
-        if(this.state.index>20){
-            console.log("Dd")
-        }
-        else{
-            return
-        }
-        let temp=[]
-        for(let i=this.state.index-1; i>0 && i>this.state.index-20 && this.props.cs.clients.length>=0 ; i--){
+        let temp = []
+        for (let i = this.state.indexStart; i <= this.state.indexEnd && i < this.props.cs.clients.length; i++) {
             temp.push(this.props.cs.clients[i])
         }
         this.setState({
-            showenClients:temp,
-            index: this.state.index-20
+            showenClients: temp
         })
+    }
 
+    nextPage = () => {
+        let range = this.state.indexEnd
+        if (range < this.props.cs.clients.length) {
+            if (range < 19) {
+                this.setState({
+                    indexStart: this.state.indexEnd,
+                    indexEnd: this.state.indexEnd + range
+                })
+            }
+            else {
+                this.setState({
+                    indexStart: this.state.indexEnd,
+                    indexEnd: this.state.indexEnd + 20
+                }, function () {
+                    console.log(this.state.indexStart, this.state.indexEnd)
+                    let temp = []
+                    for (let i = this.state.indexStart;
+                        i < this.state.indexEnd && i < this.props.cs.clients.length; i++) {
+                        temp.push(this.props.cs.clients[i])
+                    }
+                    this.setState({
+                        showenClients: temp
+                    })
+                })
+            }
+        }
     }
-    category = (e) => {
+    backPage = () => {
+        if (this.state.indexStart == 0) {
+            this.showFirstPage()
+            return
+        }
+
+        let temp = []
+        for (let i = this.state.indexEnd - 1; i > this.state.indexStart; i--) {
+            temp.push(this.props.cs.clients[i])
+        }
+
         this.setState({
-            category: e.target.value
+            showenClients: temp,
+            indexEnd: this.state.indexStart,
+            indexStart: this.state.indexStart - 20 < 0 ? 0 : this.state.indexStart - 20
+        }, function() {
+            if (this.state.indexStart == 0) {
+                this.showFirstPage()
+            }
         })
     }
-    search = (e) => {
-        this.props.cs.searchByCategory(this.state.category,e.target.value )
+    changeCategory=(e)=>{
+        this.showFirstPage()
+        this.setState({
+            category:e.target.value
+        },function(){
+            this.props.cs.searchByCategory(this.state.category,this.state.text)
+        })}
+    searchByCategory= async (e)=>{
+        this.setState({text:e.target.value},async function(){
+            let category=this.state.category
+            await this.props.cs.getClients()
+            this.props.cs.searchByCategory(category,this.state.text)
+            this.showFirstPage()
+        })
+        
     }
+
 
     render() {
         return (
             <div>
-                <select onChange={this.category} >
+                <select onChange={this.changeCategory} >
                     <option> Name</option>
                     <option>Country</option>
                 </select>
-                <input type="text" onChange={this.search} />
-    <span className="nav" onClick={this.retClientsBack}> <i class="fa fa-angle-left"></i></span>
-    <span className="nav"  onClick={this.retClientsNext}>  {this.state.index-20>=0 ? this.state.index-20: null } ... {this.state.index} <i class="fa fa-angle-right"></i></span>
- 
-      <Table  responsive striped bordered hover>
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Surname</th>
-      <th scope="col">Country</th>
-      <th scope="col">First Contact</th>
-      <th scope="col">Email</th>
-      <th scope="col">Sold</th>
-      <th scope="col">Owner</th>
-    </tr>
-  </thead>
-  <tbody>
-      
-  {this.state.showenClients.map(e => <ClientsDetails item={e} />)}
-  
-  </tbody>
-</Table>
-                
-      
-      </div>
+                <input type="text" onChange={this.searchByCategory} />
+                <span className="nav">  <i class="fa fa-angle-left" onClick={this.backPage}></i> {this.state.indexStart}...{this.state.indexEnd} <i class="fa fa-angle-right" onClick={this.nextPage}></i></span>
+                <Table responsive striped bordered hover >
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">First Contact</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Sold</th>
+                            <th scope="col">Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {this.state.showenClients.map(e => <ClientsDetails item={e} />)}
+
+                    </tbody>
+                </Table>
+
+
+            </div>
         );
     }
 }
