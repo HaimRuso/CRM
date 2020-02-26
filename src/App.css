@@ -37,6 +37,11 @@ thead{
   background-color: rgb(245, 229, 5);
 }
 .action{
-  background-color:lightcyan;
   height: 100vh;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+.clients{
+  min-height: 100vh;
+  height: 100%;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }

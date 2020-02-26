@@ -39,11 +39,11 @@ class AddClient extends Component {
             <div>
                 <h3>First Name<input type="text" name='firstName' onChange={this.handleInput} ></input></h3>
                 <h3>Surname<input  type="text" name='lastName' onChange={this.handleInput} ></input></h3>
-                <h3>Country<Form.Control as="select">
+                <h3>Country<Form.Control as="select" name='country' onChange={this.handleInput}>
                 {this.props.as.countries.map(e=><option>{e.name}</option>)}
               </Form.Control>
                     </h3>
-              <select>{this.props.as.owners.map(e=><option>{e.o_name}</option>)}</select>
+              <select name='owner' onChange={this.handleInput}>{this.props.as.owners.map(e=><option>{e.o_name}</option>)}</select>
                 <Button onClick={this.addClient}>Add New Client</Button>
             </div>
         );

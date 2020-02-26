@@ -49,21 +49,13 @@ WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`
 
 
 app.post('/addClient', async function (req, res) {
-  
-  var owner = await sequelize.query(`INSERT INTO owners(o_name) VALUES('${req.body.owner}')`)
-  const lastIdo=await sequelize.query(`SELECT LAST_INSERT_ID() FROM owners `)
-  const getOwnerId=Object.values(lastIdo[0][0])[0]
-  var country = await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
-  const lastIdc=await sequelize.query(`SELECT LAST_INSERT_ID() FROM owners `)
-  const getCountryId=Object.values(lastIdc[0][0])[0]
+  let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.owner}' `)
+  ownerId=Object.values(ownerId[0][0])[0]
+  console.log(ownerId)
+  let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  countryId=Object.values(ownerId[0][0])[0]
+  console.log(countryId)
 
-
-  var clients = await sequelize.query(`INSERT INTO clients(c_name,sname,email,firstContact,sale_status,email_type,owner,country)
-
-   VALUES('${req.body.firstName}','${req.body.lastName}','${req.body.country}','-',NOW(),1, 1, ${getOwnerId},${getCountryId}`)
-
-  res.send("sababa")
- 
 })
 app.put('/user/:id', function (req, res) {
   console.log(req.params.id)

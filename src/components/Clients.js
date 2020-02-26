@@ -5,7 +5,8 @@ import { observer, inject } from 'mobx-react'
 import Table from 'react-bootstrap/Table'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+
+
 
 
 @inject('cs')
@@ -107,10 +108,12 @@ class Clients extends Component {
 
     render() {
         return (
-            <div>
+            <div className="clients">
                 <select onChange={this.changeCategory} >
                     <option> Name</option>
+                    <option> Surname</option>
                     <option>Country</option>
+                    <option>Owner</option>
                 </select>
                 <input type="text" onChange={this.searchByCategory} />
                 <span className="nav">  <i class="fa fa-angle-left" onClick={this.backPage}></i> {this.state.indexStart}...{this.state.indexEnd} <i class="fa fa-angle-right" onClick={this.nextPage}></i></span>

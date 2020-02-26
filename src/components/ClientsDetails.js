@@ -36,7 +36,7 @@ class ClientsDetails extends Component {
             // </tr>
             <tr>
             <td>{this.props.item.name}</td>
-            <td>{this.props.item.sName}</td>
+            <td>{this.props.item.surname}</td>
             <td>{this.props.item.country}</td>
             <td>{moment(this.props.item.firstContact).utc().format('DD-MM-YYYY')}</td>
             <td>{this.props.item.email}</td>
