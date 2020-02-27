@@ -48,3 +48,12 @@ thead{
 .action{
   margin-left: 50px;
 }
+
+.form {
+  width: 120px;
+}
+.addClient{
+  margin-left: 200px;
+  margin-top: 50px;
+  width: 200px;
+}

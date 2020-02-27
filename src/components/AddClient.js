@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
 import { observer, inject } from 'mobx-react'
+import { Input} from '@material-ui/core';
 @inject('cs', 'as')
 @observer
 class AddClient extends Component {
@@ -37,14 +39,18 @@ class AddClient extends Component {
     render() {
         return (
             <div>
-                <h3>First Name<input type="text" name='firstName' onChange={this.handleInput} ></input></h3>
-                <h3>Surname<input  type="text" name='lastName' onChange={this.handleInput} ></input></h3>
-                <h3>Country<Form.Control as="select" name='country' onChange={this.handleInput}>
+                <span>First Name:<Input type="text" name='firstName' onChange={this.handleInput} ></Input></span>
+                <span>Surname:<Input  type="text" name='lastName' onChange={this.handleInput} ></Input></span><br></br>
+                <span>Country:<form className="form">
+                    <select name='country' onChange={this.handleInput}>
                 {this.props.as.countries.map(e=><option>{e.name}</option>)}
-              </Form.Control>
-                    </h3>
+                </select>  
+              </form>
+                    </span>Owner:
+                    <form className="form">
               <select name='owner' onChange={this.handleInput}>{this.props.as.owners.map(e=><option>{e.o_name}</option>)}</select>
-                <Button onClick={this.addClient}>Add New Client</Button>
+                <Button className="addClient" onClick={this.addClient}>Add New Client</Button>
+                </form>
             </div>
         );
     }
