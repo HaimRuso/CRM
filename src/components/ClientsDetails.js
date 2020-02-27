@@ -40,7 +40,7 @@ class ClientsDetails extends Component {
             <td>{this.props.item.country}</td>
             <td>{moment(this.props.item.firstContact).utc().format('DD-MM-YYYY')}</td>
             <td>{this.props.item.email}</td>
-            <td>{this.props.item.sold ==1 ? '✔': '-'}</td>
+            <td>{this.props.item.sold ===1 ? '✔': '-'}</td>
             <td>{this.props.item.owner}</td>
             </tr>
             //   {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}

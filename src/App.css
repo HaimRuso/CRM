@@ -45,3 +45,6 @@ thead{
   height: 100%;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
+.action{
+  margin-left: 50px;
+}

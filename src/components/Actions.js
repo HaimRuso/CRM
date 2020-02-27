@@ -9,9 +9,11 @@ import AddClient from './AddClient'
 class Actions extends Component {
     render() {
         return (
-            <div className='action' >
+            <div className='action'>
                 <h2>Update</h2>
-                <h3>Client: <input type="text" placeholder="Clinet Name"></input></h3>
+                <h2>Client:   </h2><Input placeholder="Clinet Name"></Input>
+
+                {/* <h3>Client: <input type="text" placeholder="Clinet Name"></input></h3> */}
                 <h4>Transfer Ownership to owner:</h4>
                 <select className="custom-select">
                     <option>Owner</option>
