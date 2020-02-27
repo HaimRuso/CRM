@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { observer, inject } from 'mobx-react'
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch,Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch,Route, Link, Redirect} from "react-router-dom";
 import Clients from './components/Clients'
 import Actions from './components/Actions'
 
@@ -18,6 +18,7 @@ class App extends Component {
       <li className="item"><Link to='/Actions'> Actions </Link></li>
       <li className="item"><Link to='/Analytics'> Analytics </Link></li>
       </ul>
+      <Redirect to = '/Clients' />
      <Route exact path='/CLients'><Clients/></Route>
      <Route exact path='/Actions'><Actions/></Route>
 

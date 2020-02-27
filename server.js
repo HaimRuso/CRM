@@ -49,12 +49,20 @@ WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`
 
 
 app.post('/addClient', async function (req, res) {
+  console.log(req.body)
   let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.owner}' `)
   ownerId=Object.values(ownerId[0][0])[0]
-  console.log(ownerId)
   let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
-  countryId=Object.values(ownerId[0][0])[0]
-  console.log(countryId)
+  countryId=Object.values(countryId[0][0])[0]
+  sequelize.query(`INSERT INTO clients(c_name,sname, email, firstContact, sale_status, email_type, owner, country)
+   VALUES('${req.body.firstName}','${req.body.lastName}','-',NOW(),1,1,${ownerId},${countryId}) `)
+  .then(function (result) {
+   
+    res.send(result)
+  }
+  )
+  
+  
 
 })
 app.put('/user/:id', function (req, res) {
