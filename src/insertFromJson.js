@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
+const sequelize = new Sequelize('mysql://root:@localhost/sql_crm')
 
 
 
@@ -38,11 +38,11 @@ for (let i = 0; i < data.length; i++) {
 //     })
 // }
 // for (i=0; i<countryArry.length; i++) {
-    // sequelize
-    // .query(`INSERT INTO countries (country) VALUES('${countryArry[i]}')`)
-    // .then(function (result) {
-    //     console.log(result)
-    // })
+//     sequelize
+//     .query(`INSERT INTO countries (country) VALUES('${countryArry[i]}')`)
+//     .then(function (result) {
+//         console.log(result)
+//     })
 // }
 // for (i=0; i<emailTypeArry.length; i++) {
 //     sequelize
@@ -61,10 +61,10 @@ console.log(arr[0][1])
 for (let i = 0; i < data.length; i++) {
         
         
-    sequelize
-        .query(`INSERT INTO clients (c_name,sname, email, firstContact, sale_status, email_type, owner, country) 
-                VALUES('${data[i].name.split(' ')[0]}','${data[i].name.split(' ')[1]}' ,'${data[i].email}', NOW(), ${data[i].sold}, ${emailTypeObj[data[i].emailType]},${ownersObj[data[i].owner]},${countryObj[data[i].country]})`)
-        .then(function (result) {
-            console.log(result)
-        })
+    // sequelize
+    //     .query(`INSERT INTO clients (c_name,sname, email, firstContact, sale_status, email_type, owner, country) 
+    //             VALUES('${data[i].name.split(' ')[0]}','${data[i].name.split(' ')[1]}' ,'${data[i].email}', NOW(), ${data[i].sold}, ${emailTypeObj[data[i].emailType]},${ownersObj[data[i].owner]},${countryObj[data[i].country]})`)
+    //     .then(function (result) {
+    //         console.log(result)
+    //     })
 }

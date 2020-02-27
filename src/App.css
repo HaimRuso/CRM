@@ -45,3 +45,51 @@ thead{
   height: 100%;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
+.action{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-auto-rows: 100px 100px;
+  grid-template-areas: 
+  "a b";
+  align-items: start;
+}
+.updateClient{
+  margin-top: 100px;
+  margin-left: 50px;
+  grid-area: b;
+}
+.addClient{
+  grid-area: a;
+  display: inline-block;
+  margin-left: 200px;
+  margin-bottom: 300px;
+}
+
+.buttonUpdate{
+  display: inline-block;
+  width: 150px;
+  margin-left:50px;
+}
+ .buttonAdd{
+ margin-left: 50px;
+}
+.form {
+  width: 150px;
+}
+ .container_addClinet{
+   display: inline;
+ }
+.updateh2{
+display: inline;
+}
+.addh2{
+  display: inline-block;
+  }
+.countrySelect{
+  width: 150px;
+  text-align-last:center;
+}
+.optionSold{
+  width: 80px;
+  text-align-last:center;
+}

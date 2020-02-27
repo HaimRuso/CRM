@@ -3,8 +3,7 @@ const app = express()
 const port = 4200
 const bodyParser = require("body-parser")
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
-
+const sequelize = new Sequelize('mysql://root:@localhost/sql_crm')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -15,8 +14,6 @@ app.use(function (req, res, next) {
 
   next()
 })
-
-
 
 app.get('/clients', (req, res) =>
   sequelize
@@ -33,16 +30,13 @@ app.get('/filterdClients/:category/:name', (req, res) =>
 clients.firstContact, clients.sale_status, email_type.e_type, owners.o_name, countries.country FROM clients, countries, email_type, owners 
 WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`)
     .then(function (result) {
-
       res.send(result)
     }))
 
     app.get('/owners', async function(req, res){
- 
       sequelize
       .query(`SELECT o_name FROM owners`)
       .then(function (result) {
-
         res.send(result)
       })
     })
@@ -74,6 +68,17 @@ app.put('/user/:id', function (req, res) {
       res.send(result)
     }
     )
+})
+
+app.put('/updateClient', async function(req, res) {
+  let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.or}'`)
+  ownerId=Object.values(ownerId[0][0])[0]
+  let updatedClinet= await sequelize.query(`UPDATE clients SET owner=${ownerId}
+      WHERE c_name = '${req.body.fname}' AND sname = '${req.body.lname}'`)
+      .then(function (result) {
+        res.send('done')
+      }
+      )
 })
 
 

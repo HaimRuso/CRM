@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
 import { observer, inject } from 'mobx-react'
+import { Input} from '@material-ui/core';
 @inject('cs', 'as')
 @observer
 class AddClient extends Component {
@@ -36,15 +38,23 @@ class AddClient extends Component {
    
     render() {
         return (
-            <div>
-                <h3>First Name<input type="text" name='firstName' onChange={this.handleInput} ></input></h3>
-                <h3>Surname<input  type="text" name='lastName' onChange={this.handleInput} ></input></h3>
-                <h3>Country<Form.Control as="select" name='country' onChange={this.handleInput}>
+            <div className="container_addClinet">
+                <span className="addClient" key="addClient">
+                <h2 className="addh2">ADD CLIENT</h2>
+                <Button className="buttonAdd" onClick={this.addClient}>Add New Client</Button><br></br>
+                <span>First Name:<Input type="text" name='firstName' onChange={this.handleInput} ></Input></span><br></br>
+                <span>Surname: <Input  type="text" name='lastName' onChange={this.handleInput} ></Input></span><br></br>
+               <span>Country:<form className="form">
+                    <select className="countrySelect" name='country' onChange={this.handleInput}>
                 {this.props.as.countries.map(e=><option>{e.name}</option>)}
-              </Form.Control>
-                    </h3>
+                </select>  
+              </form>
+                    <br></br>
+                    </span>Owner:
+                    <form className="form">
               <select name='owner' onChange={this.handleInput}>{this.props.as.owners.map(e=><option>{e.o_name}</option>)}</select>
-                <Button onClick={this.addClient}>Add New Client</Button>
+                </form>
+                </span>
             </div>
         );
     }

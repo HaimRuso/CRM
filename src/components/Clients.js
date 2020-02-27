@@ -70,7 +70,7 @@ class Clients extends Component {
         }
     }
     backPage = () => {
-        if (this.state.indexStart == 0) {
+        if (this.state.indexStart === 0) {
             this.showFirstPage()
             return
         }
@@ -85,7 +85,7 @@ class Clients extends Component {
             indexEnd: this.state.indexStart,
             indexStart: this.state.indexStart - 20 < 0 ? 0 : this.state.indexStart - 20
         }, function() {
-            if (this.state.indexStart == 0) {
+            if (this.state.indexStart === 0) {
                 this.showFirstPage()
             }
         })
@@ -110,7 +110,7 @@ class Clients extends Component {
 
     render() {
         return (
-            <div className="clients">
+            <div className="clients" key="clients">
                 <select onChange={this.changeCategory} >
                     <option> Name</option>
                     <option> Surname</option>
