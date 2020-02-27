@@ -42,11 +42,13 @@ class Clients extends Component {
 
     nextPage = () => {
         let range = this.state.indexEnd
+        // console.log(range)
         if (range < this.props.cs.clients.length) {
-            if (range < 19) {
+            if (this.props.cs.clients.length-range < 19) {
+        
                 this.setState({
                     indexStart: this.state.indexEnd,
-                    indexEnd: this.state.indexEnd + range
+                    indexEnd: this.state.indexEnd + (this.props.cs.clients.length-range)
                 })
             }
             else {
