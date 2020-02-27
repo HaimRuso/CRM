@@ -70,6 +70,17 @@ app.put('/user/:id', function (req, res) {
     )
 })
 
+app.put('/updateClient', async function(req, res) {
+  let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.or}'`)
+  ownerId=Object.values(ownerId[0][0])[0]
+  let updatedClinet= await sequelize.query(`UPDATE clients SET owner=${ownerId}
+      WHERE c_name = '${req.body.fname}' AND sname = '${req.body.lname}'`)
+      .then(function (result) {
+        res.send('done')
+      }
+      )
+})
+
 
 app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user')

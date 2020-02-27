@@ -110,7 +110,7 @@ class Clients extends Component {
 
     render() {
         return (
-            <div className="clients">
+            <div className="clients" key="clients">
                 <select onChange={this.changeCategory} >
                     <option> Name</option>
                     <option> Surname</option>
