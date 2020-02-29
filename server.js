@@ -3,7 +3,7 @@ const app = express()
 const port = 4200
 const bodyParser = require("body-parser")
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('mysql://root:@localhost/sql_crm')
+const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
