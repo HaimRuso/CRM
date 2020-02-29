@@ -43,13 +43,20 @@ WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`
 
 
 app.post('/addClient', async function (req, res) {
-  console.log(req.body)
+  console.log("im here")
   let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.owner}' `)
   ownerId=Object.values(ownerId[0][0])[0]
   let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  if(!countryId[0][0]){
+   await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
+   countryId=await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+    console.log("done")
+  }
   countryId=Object.values(countryId[0][0])[0]
+  console.log(countryId)
+
   sequelize.query(`INSERT INTO clients(c_name,sname, email, firstContact, sale_status, email_type, owner, country)
-   VALUES('${req.body.firstName}','${req.body.lastName}','-',NOW(),1,1,${ownerId},${countryId}) `)
+   VALUES('${req.body.firstName}','${req.body.lastName}','${req.body.email}',NOW(),1,1,${ownerId},${countryId}) `)
   .then(function (result) {
    
     res.send(result)
@@ -62,7 +69,7 @@ app.post('/addClient', async function (req, res) {
 app.put('/user/:id', function (req, res) {
   console.log(req.params.id)
   sequelize
-    .query(`SELECT * FROM clients WHERE id=${req.params.id} `)
+    .query(`SELECT * FROM clients WHERE id=${req.params.id}  `)
     .then(function (result) {
       console.log(result)
       res.send(result)
@@ -71,14 +78,24 @@ app.put('/user/:id', function (req, res) {
 })
 
 app.put('/updateClient', async function(req, res) {
+  console.log(req.body.sold)
+  let clientId=await sequelize.query(`SELECT id FROM clients WHERE  c_name = '${req.body.fname}' AND sname = '${req.body.lname}' `)
+  if(!Object.values(clientId[0])[0]){
+    res.send('0')
+  }
   let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.or}'`)
   ownerId=Object.values(ownerId[0][0])[0]
-  let updatedClinet= await sequelize.query(`UPDATE clients SET owner=${ownerId}
-      WHERE c_name = '${req.body.fname}' AND sname = '${req.body.lname}'`)
+  let updatedClinet= await sequelize.query(`UPDATE clients SET owner=${ownerId},
+    sale_status=${req.body.sold} WHERE c_name = '${req.body.fname}' AND sname = '${req.body.lname}'`)
       .then(function (result) {
         res.send('done')
       }
       )
+})
+app.put('/changeClient', async function(req,res){
+  let email=req.body.email
+  await sequelize.query(`UPDATE clients SET c_name=${email},
+  sname=${req.body.sold} WHERE email = '${email}' `)
 })
 
 

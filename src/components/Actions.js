@@ -14,9 +14,10 @@ class Actions extends Component {
         super()
         this.state={
             fullName:"",
-            owner:"",
+            owner:"Barton Ramirez",
             email_type:"",
-            isValid:false
+            isValid:false,
+            sold:true
         }
     }
     notifyError = ()=>{
@@ -38,12 +39,19 @@ class Actions extends Component {
             })
         }
     }
-
+    sold=(e)=>{
+        if(e.target.value=='Sold'){
+            this.setState({
+                sold:true
+            })
+        }
+    }
     updateClient=async()=>{
         let firstName=this.state.fullName.split(' ')[0]
         let lastName=this.state.fullName.split(' ')[1]
         let owner=this.state.owner
-        let rest= await this.props.as.updateClient(firstName ,lastName ,owner)
+        let sold=this.state.sold
+        let rest= await this.props.as.updateClient(firstName ,lastName ,owner,sold)
         console.log(rest)
         if(rest==0){
             this.notifyError()
@@ -67,12 +75,13 @@ class Actions extends Component {
                 </form>
                 </span>
                 <br></br>
-                <span>Send email:</span>
+                <span>Sale Status</span>
                 <form className="form">
-                <select className="optionSold">
+                <select name="sold" onChange={this.sold} className="optionSold">
                     <option>Sold</option>
+                    <option>Unsold</option>
                 </select>
-                <h6><br></br>Declare sale!</h6>
+               
                 </form>
                 </span>
                 <AddClient/>

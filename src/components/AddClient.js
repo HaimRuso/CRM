@@ -11,16 +11,18 @@ class AddClient extends Component {
        this.state={
            firstName:"",
            lastName:"",
-           country:"",
-           owner:"",
+           country:"Afghanistan",
+           owner:"Barton Ramirez",
            email:""
        }
    }
    
    handleInput=(e)=>{
-       console.log(e.target.name, e.target.value)
+       
     this.setState({
         [e.target.name]:e.target.value
+    },function(){
+        console.log(this.state.email)
     })
    }
    addClient=()=>{
@@ -28,8 +30,9 @@ class AddClient extends Component {
        let lastName=this.state.lastName
        let country=this.state.country
        let owner=this.state.owner
+       let email=this.state.email
        console.log(firstName, lastName, country, owner)
-       this.props.cs.addClient(firstName ,lastName ,country ,owner)
+       this.props.cs.addClient(firstName ,lastName ,country ,owner,email)
    }
    
    componentDidMount=()=>{

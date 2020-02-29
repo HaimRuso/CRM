@@ -32,7 +32,7 @@ USE sql_crm;
 --  );
 
 
- 
+ DELETE from owners WHERE id=42
 
 
 

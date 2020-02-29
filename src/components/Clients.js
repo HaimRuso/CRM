@@ -3,6 +3,7 @@ import './../App.css';
 import ClientsDetails from './ClientsDetails'
 import { observer, inject } from 'mobx-react'
 import Table from 'react-bootstrap/Table'
+import PopUp from './PopUp'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,6 +21,7 @@ class Clients extends Component {
             indexStart: 0,
             indexEnd: 19,
             showenClients: []
+           
         }
     }
     componentDidMount = async () => {

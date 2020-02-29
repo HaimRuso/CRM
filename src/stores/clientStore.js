@@ -14,34 +14,27 @@ export class clientStore {
     // console.log(temp)
     this.clients = temp
   }
-  @action addClient= async (firstName,lastName,country,owner)=>{
-    let newClient= {firstName:firstName, lastName:lastName, country:country, owner:owner}
+  @action addClient= async (firstName,lastName,country,owner,email)=>{
+    let newClient= {firstName:firstName, lastName:lastName, country:country, owner:owner, email:email}
     let result=await axios.post('http://localhost:4200/addClient', newClient)
     // console.log(result)
   }
 
-  @action updateClient= async (firstName,lastName,owner)=>{
-    let updatedClinet={fname:firstName, lname:lastName, or:owner}
-    let result=await axios.put('http://localhost:4200/updateClient',updatedClinet)
-    console.log(result)
-  }
 
   @action searchByCategory = (category, text) => {
       if(text){
       let category1 = category.toLowerCase()
       let filterd = this.clients.filter(e => e[category1].includes(text))
-      // console.log(filterd.length)
       this.clients = filterd
-      
       }else{
         debugger
       this.getClients()
       }
   }
 
-  @action updateUser = async (id) => {
-
-    let user = await axios.put(`http://localhost:3000/user/${id}`)
+  @action updateClient = async (client) => {
+    console.log(client.email)
+    let user = await axios.put(`http://localhost:4200/changeClient`,client )
 
   }
 }
