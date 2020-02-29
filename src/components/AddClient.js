@@ -12,7 +12,8 @@ class AddClient extends Component {
            firstName:"",
            lastName:"",
            country:"",
-           owner:""
+           owner:"",
+           email:""
        }
    }
    
@@ -44,6 +45,7 @@ class AddClient extends Component {
                 <Button className="buttonAdd" onClick={this.addClient}>Add New Client</Button><br></br>
                 <span>First Name:<Input type="text" name='firstName' onChange={this.handleInput} ></Input></span><br></br>
                 <span>Surname: <Input  type="text" name='lastName' onChange={this.handleInput} ></Input></span><br></br>
+                <span>Email: <Input  type="email" name='email' onChange={this.handleInput} ></Input></span><br></br>
                <span>Country:<form className="form">
                     <select className="countrySelect" name='country' onChange={this.handleInput}>
                 {this.props.as.countries.map(e=><option>{e.name}</option>)}

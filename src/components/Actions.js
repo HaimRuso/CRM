@@ -4,6 +4,9 @@ import { Button, Form } from 'react-bootstrap';
 import { Input} from '@material-ui/core';
 import { observer, inject } from 'mobx-react'
 import AddClient from './AddClient'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'; 
+toast.configure()
 @inject('cs','as')
 @observer 
 class Actions extends Component {
@@ -12,22 +15,42 @@ class Actions extends Component {
         this.state={
             fullName:"",
             owner:"",
-            email_type:""
+            email_type:"",
+            isValid:false
         }
+    }
+    notifyError = ()=>{
+        toast.error('User is not exist')
+    }
+    notifySucc= ()=>{
+        toast.success('Succseed')
     }
 
     handleInput=(e)=>{
-        console.log(e.target.name, e.target.value)
-     this.setState({
-         [e.target.name]:e.target.value
-     })
+        if(e.target.value){
+            this.setState({
+                [e.target.name]:e.target.value,
+                Isvalid:true
+            })
+        }else{
+            this.setState({
+                Isvalid: false
+            })
+        }
     }
 
-    updateClient=()=>{
+    updateClient=async()=>{
         let firstName=this.state.fullName.split(' ')[0]
         let lastName=this.state.fullName.split(' ')[1]
         let owner=this.state.owner
-        this.props.cs.updateClient(firstName ,lastName ,owner)
+        let rest= await this.props.as.updateClient(firstName ,lastName ,owner)
+        console.log(rest)
+        if(rest==0){
+            this.notifyError()
+        }
+        else{
+            this.notifySucc()
+        }
     }
     
     render() {
@@ -36,7 +59,7 @@ class Actions extends Component {
                 <br></br>
                 <span className="updateClient">
                 <h2 className="updateh2" >UPDATE CLIENT </h2> 
-            <Button className="buttonUpdate" onClick={this.updateClient}> Update Client </Button><br></br>
+                <Button className="buttonUpdate" disabled={!this.state.Isvalid} onClick={this.updateClient}> Update Client </Button><br></br>
                 <span>Client:</span> <Input type="text" name='fullName' placeholder="Clinet Name" onChange={this.handleInput}></Input>
                 <br></br><br></br>
                 <span>Transfer Ownership to owner:<form className="form">
@@ -53,6 +76,8 @@ class Actions extends Component {
                 </form>
                 </span>
                 <AddClient/>
+
+                
             </div>
         );
     }
