@@ -9,8 +9,8 @@ class ClientsDetails extends Component {
    constructor(){
    super()
     this.state={
-        popUp:false,
-        email:""
+        email:"",
+        popUp:false
      }
 }
   
@@ -31,17 +31,13 @@ class ClientsDetails extends Component {
        
     if(!this.state.popUp){
        this.setState({
+        email:this.props.item.email,
         popUp: !this.state.popUp
        },function(){
-           console.log(this.state.popUp)
        })
     }
    }
-   handleInput=(e)=>{
-    this.setState({
-        email:e.currentTarget.textContent
-    }) 
-   }
+
    
     render() {
         return (
@@ -50,10 +46,10 @@ class ClientsDetails extends Component {
             <td>{this.props.item.surname}</td>
             <td>{this.props.item.country}</td>
             <td>{moment(this.props.item.firstContact).utc().format('DD-MM-YYYY')}</td>
-            <td className="email" onClick={this.handleInput} >{this.props.item.email}</td>
-            <td>{this.props.item.sold ===1 ? '✔': '-'}</td>
+            <td className="email" >{this.props.item.email}</td>
+            <td>{this.props.item.sold ===1 ? '✔': '❌'}</td>
             <td>{this.props.item.owner}</td>
-            {<PopUp close={this} email={this.state.email}  show={this.state.popUp} /> }
+            {<PopUp item={this.props} close={this} email={this.state.email}  show={this.state.popUp} /> }
             </tr>
             
            

@@ -44,6 +44,10 @@ class Actions extends Component {
             this.setState({
                 sold:true
             })
+        }else{
+            this.setState({
+                sold:false
+            })
         }
     }
     updateClient=async()=>{

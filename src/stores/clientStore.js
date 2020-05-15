@@ -23,18 +23,15 @@ export class clientStore {
 
   @action searchByCategory = (category, text) => {
       if(text){
-      let category1 = category.toLowerCase()
-      let filterd = this.clients.filter(e => e[category1].includes(text))
+      let filterd = this.clients.filter(e => e[category.toLowerCase()].toLowerCase().includes(text.toLowerCase()))
       this.clients = filterd
       }else{
-        debugger
       this.getClients()
       }
   }
 
   @action updateClient = async (client) => {
-    console.log(client.email)
     let user = await axios.put(`http://localhost:4200/changeClient`,client )
-
+    this.getClients()
   }
 }

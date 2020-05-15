@@ -7,9 +7,6 @@ import PopUp from './PopUp'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
-
 @inject('cs')
 @observer
 class Clients extends Component {
@@ -135,7 +132,7 @@ class Clients extends Component {
                     </thead>
                     <tbody>
 
-                        {this.state.showenClients.map(e => <ClientsDetails item={e} />)}
+                        {this.state.showenClients.map(e => <ClientsDetails  id={e.id} item={e} clients={this.props} />)}
 
                     </tbody>
                 </Table>

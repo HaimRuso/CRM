@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Modal, Button, Row, Col,Form} from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import { Input} from '@material-ui/core';
-@inject('cs')
+@inject('cs','as')
 @observer
 class PopUp extends Component {
   constructor(props){
@@ -10,7 +10,7 @@ class PopUp extends Component {
     this.state={
       firstName:"",
       lastName:"",
-      country:"",
+      country:"Afghanistan",
       email:""
     }
   }
@@ -19,13 +19,19 @@ class PopUp extends Component {
     this.props.close.closePop()
   }
 
+  componentDidMount= ()=>{
+    this.props.as.getCountries()
+  }
+
   updateClient = ()=>{
     let changedClient ={
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       country: this.state.country,
-      email:this.props.email
+      email:this.state.email,
+      identifyEmail:this.props.email
     }
+    console.log(changedClient)
     this.props.cs.updateClient(changedClient)
   }
   handleInput=(e)=>{
@@ -36,21 +42,23 @@ class PopUp extends Component {
       } 
      render() {
        return (
-        <Modal
+        <Modal 
         {...this.props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title className="pop" id="contained-modal-title-vcenter">
            Update Client
           </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="popBody" >
         <div>First Name: <Input type="text" name='firstName' placeholder="First Name" onChange={this.handleInput}></Input> </div>
         <div>SurName: <Input type="text" name='lastName' placeholder="Surname" onChange={this.handleInput}></Input></div>
-        <div>Country: <Input type="text" name='country' placeholder="Country" onChange={this.handleInput}></Input> </div>
+        <div>Email: <Input type="text" name='email' placeholder="Email" onChange={this.handleInput}></Input></div>
+        <div>Country:                    
+               <select className="countrySelect" name='country' onChange={this.handleInput}>
+                {this.props.as.countries.map(e=><option>{e.name}</option>)}
+                </select>   </div>
         <br></br>
         <div>
         <Button className="buttonUpdate" onClick={this.updateClient} > Update Client </Button>

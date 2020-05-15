@@ -96,3 +96,14 @@ display: inline;
 .closeBTN{
   margin-left: 90%;
 }
+.pop{
+  background-color: rgb(255, 230, 0);
+}
+.popBody{
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.countrySelect{
+  margin-bottom: 0px !important;
+
+}

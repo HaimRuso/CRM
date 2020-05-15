@@ -93,9 +93,15 @@ app.put('/updateClient', async function(req, res) {
       )
 })
 app.put('/changeClient', async function(req,res){
-  let email=req.body.email
-  await sequelize.query(`UPDATE clients SET c_name=${email},
-  sname=${req.body.sold} WHERE email = '${email}' `)
+  let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  if(!countryId[0][0]){
+   await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
+   countryId=await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+    console.log("done")
+  }
+  countryId=Object.values(countryId[0][0])[0]
+  await sequelize.query(`UPDATE clients SET c_name='${req.body.firstName}',
+  sname='${req.body.lastName}',email='${req.body.email}',country='${countryId}' WHERE email = '${req.body.identifyEmail}' `)
 })
 
 
