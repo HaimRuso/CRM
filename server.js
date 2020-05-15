@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = process.env.port || 4200
+const port = process.env.PORT || 4200
 const bodyParser = require("body-parser")
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
