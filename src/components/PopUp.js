@@ -21,9 +21,10 @@ class PopUp extends Component {
 
   componentDidMount= ()=>{
     this.props.as.getCountries()
+
   }
 
-  updateClient = ()=>{
+  updateClient = async ()=>{
     let changedClient ={
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -32,8 +33,17 @@ class PopUp extends Component {
       identifyEmail:this.props.email
     }
     console.log(changedClient)
-    this.props.cs.updateClient(changedClient)
+    await this.props.cs.updateClient(changedClient)
+    this.props.cs.getClients()
+    this.props.firstPage()
+
+  
   }
+
+
+
+
+
   handleInput=(e)=>{
     console.log(e.target.name, e.target.value)
         this.setState({
@@ -54,7 +64,7 @@ class PopUp extends Component {
         <Modal.Body className="popBody" >
         <div>First Name: <Input type="text" name='firstName' placeholder="First Name" onChange={this.handleInput}></Input> </div>
         <div>SurName: <Input type="text" name='lastName' placeholder="Surname" onChange={this.handleInput}></Input></div>
-        <div>Email: <Input type="text" name='email' placeholder="Email" onChange={this.handleInput}></Input></div>
+        <div>Email: <Input type="email" name='email' placeholder="Email" onChange={this.handleInput}></Input></div>
         <div>Country:                    
                <select className="countrySelect" name='country' onChange={this.handleInput}>
                 {this.props.as.countries.map(e=><option>{e.name}</option>)}

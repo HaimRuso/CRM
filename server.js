@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
-const port = 4200
+const port = process.env.port || 4200
 const bodyParser = require("body-parser")
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('mysql://root:123456@localhost/sql_crm')
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
@@ -33,37 +33,37 @@ WHERE countries.${req.params.category.toLowerCase()} LIKE '${req.params.name}%'`
       res.send(result)
     }))
 
-    app.get('/owners', async function(req, res){
-      sequelize
-      .query(`SELECT o_name FROM owners`)
-      .then(function (result) {
-        res.send(result)
-      })
+app.get('/owners', async function (req, res) {
+  sequelize
+    .query(`SELECT o_name FROM owners`)
+    .then(function (result) {
+      res.send(result)
     })
+})
 
 
 app.post('/addClient', async function (req, res) {
   console.log("im here")
-  let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.owner}' `)
-  ownerId=Object.values(ownerId[0][0])[0]
-  let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
-  if(!countryId[0][0]){
-   await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
-   countryId=await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  let ownerId = await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.owner}' `)
+  ownerId = Object.values(ownerId[0][0])[0]
+  let countryId = await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  if (!countryId[0][0]) {
+    await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
+    countryId = await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
     console.log("done")
   }
-  countryId=Object.values(countryId[0][0])[0]
+  countryId = Object.values(countryId[0][0])[0]
   console.log(countryId)
 
   sequelize.query(`INSERT INTO clients(c_name,sname, email, firstContact, sale_status, email_type, owner, country)
    VALUES('${req.body.firstName}','${req.body.lastName}','${req.body.email}',NOW(),1,1,${ownerId},${countryId}) `)
-  .then(function (result) {
-   
-    res.send(result)
-  }
-  )
-  
-  
+    .then(function (result) {
+
+      res.send(result)
+    }
+    )
+
+
 
 })
 app.put('/user/:id', function (req, res) {
@@ -77,29 +77,29 @@ app.put('/user/:id', function (req, res) {
     )
 })
 
-app.put('/updateClient', async function(req, res) {
+app.put('/updateClient', async function (req, res) {
   console.log(req.body.sold)
-  let clientId=await sequelize.query(`SELECT id FROM clients WHERE  c_name = '${req.body.fname}' AND sname = '${req.body.lname}' `)
-  if(!Object.values(clientId[0])[0]){
+  let clientId = await sequelize.query(`SELECT id FROM clients WHERE  c_name = '${req.body.fname}' AND sname = '${req.body.lname}' `)
+  if (!Object.values(clientId[0])[0]) {
     res.send('0')
   }
-  let ownerId= await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.or}'`)
-  ownerId=Object.values(ownerId[0][0])[0]
-  let updatedClinet= await sequelize.query(`UPDATE clients SET owner=${ownerId},
+  let ownerId = await sequelize.query(`SELECT owners.id FROM owners WHERE o_name='${req.body.or}'`)
+  ownerId = Object.values(ownerId[0][0])[0]
+  let updatedClinet = await sequelize.query(`UPDATE clients SET owner=${ownerId},
     sale_status=${req.body.sold} WHERE c_name = '${req.body.fname}' AND sname = '${req.body.lname}'`)
-      .then(function (result) {
-        res.send('done')
-      }
-      )
+    .then(function (result) {
+      res.send('done')
+    }
+    )
 })
-app.put('/changeClient', async function(req,res){
-  let countryId= await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
-  if(!countryId[0][0]){
-   await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
-   countryId=await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+app.put('/changeClient', async function (req, res) {
+  let countryId = await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
+  if (!countryId[0][0]) {
+    await sequelize.query(`INSERT INTO countries(country) VALUES('${req.body.country}')`)
+    countryId = await sequelize.query(`SELECT countries.id FROM countries WHERE country='${req.body.country}' `)
     console.log("done")
   }
-  countryId=Object.values(countryId[0][0])[0]
+  countryId = await Object.values(countryId[0][0])[0]
   await sequelize.query(`UPDATE clients SET c_name='${req.body.firstName}',
   sname='${req.body.lastName}',email='${req.body.email}',country='${countryId}' WHERE email = '${req.body.identifyEmail}' `)
 })

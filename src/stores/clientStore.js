@@ -12,7 +12,7 @@ export class clientStore {
     let temp = []
     clients.data[0].map(c => temp.push(new client(c.id, c.c_name, c.sname, c.email, c.firstContact, c.e_type, c.sale_status, c.o_name, c.country)))
     // console.log(temp)
-    this.clients = temp
+    this.clients =  temp
   }
   @action addClient= async (firstName,lastName,country,owner,email)=>{
     let newClient= {firstName:firstName, lastName:lastName, country:country, owner:owner, email:email}

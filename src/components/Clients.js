@@ -26,16 +26,20 @@ class Clients extends Component {
         this.showFirstPage()
     }
     showFirstPage = () => {
+        console.log('ssssssssssss')
         this.setState({
             indexStart: 0,
             indexEnd: 19
+        },function(){
         })
-        let temp = []
+        let temp =  []
         for (let i = this.state.indexStart; i <= this.state.indexEnd && i < this.props.cs.clients.length; i++) {
             temp.push(this.props.cs.clients[i])
         }
+        console.log(temp)
         this.setState({
             showenClients: temp
+        },function(){
         })
     }
 
@@ -131,8 +135,9 @@ class Clients extends Component {
                         </tr>
                     </thead>
                     <tbody>
+                        {console.log(" before render")}
 
-                        {this.state.showenClients.map(e => <ClientsDetails  id={e.id} item={e} clients={this.props} />)}
+                        {this.state.showenClients.map(e => <ClientsDetails  id={e.id} item={e} show={this.showFirstPage} clients={this.props} />)}
 
                     </tbody>
                 </Table>
