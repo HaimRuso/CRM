@@ -51,7 +51,7 @@ class ClientsDetails extends Component {
             <td className="email" >{this.props.item.email}</td>
             <td>{this.props.item.sold ===1 ? '✔': '❌'}</td>
             <td>{this.props.item.owner}</td>
-            {<PopUp item={this.props} close={this} email={this.state.email} firstPage={this.props.show}  show={this.state.popUp} /> }
+            {<PopUp item={this.props} close={this} changeUser={this.props.changeUser} email={this.state.email} firstPage={this.props.show}  show={this.state.popUp} /> }
             </tr>
             
            

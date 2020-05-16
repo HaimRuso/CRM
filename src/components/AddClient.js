@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
 import { observer, inject } from 'mobx-react'
 import { Input} from '@material-ui/core';
+import { toast } from 'react-toastify';
 @inject('cs', 'as')
 @observer
 class AddClient extends Component {
@@ -26,12 +27,18 @@ class AddClient extends Component {
     })
    }
    addClient=()=>{
+       let userExsist=false;
+       let temp=this.props.cs.clients
        let firstName=this.state.firstName
        let lastName=this.state.lastName
        let country=this.state.country
        let owner=this.state.owner
        let email=this.state.email
-       console.log(firstName, lastName, country, owner)
+        temp.forEach(e=> e.email==email ? userExsist=true : null )
+        if(userExsist){
+            toast.error('User is alredy exsist')
+            return
+        }
        this.props.cs.addClient(firstName ,lastName ,country ,owner,email)
    }
    

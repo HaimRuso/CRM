@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table'
 import PopUp from './PopUp'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {IoIosArrowDroprightCircle, IoIosArrowDropleftCircle, IoIosMore} from "react-icons/io";
 
 @inject('cs')
 @observer
@@ -25,8 +26,25 @@ class Clients extends Component {
         await this.props.cs.getClients()
         this.showFirstPage()
     }
-    showFirstPage = () => {
-        console.log('ssssssssssss')
+
+    changeUser = (userToChange)=> {
+        console.log(userToChange)
+        let temp= [...this.state.showenClients]
+        for(let i=0; i<temp.length; i++){
+            if(userToChange.identifyEmail==temp[i].email){
+                temp[i].name=userToChange.firstName
+                temp[i].surname=userToChange.lastName
+                temp[i].email=userToChange.email
+                temp[i].country=userToChange.country
+            }
+        }
+        this.setState({
+            showenClients:temp
+        })
+    }
+
+    showFirstPage =  () => {
+       
         this.setState({
             indexStart: 0,
             indexEnd: 19
@@ -36,7 +54,6 @@ class Clients extends Component {
         for (let i = this.state.indexStart; i <= this.state.indexEnd && i < this.props.cs.clients.length; i++) {
             temp.push(this.props.cs.clients[i])
         }
-        console.log(temp)
         this.setState({
             showenClients: temp
         },function(){
@@ -112,6 +129,7 @@ class Clients extends Component {
 
 
     render() {
+        
         return (
             <div className="clients" key="clients">
                 <select onChange={this.changeCategory} >
@@ -121,7 +139,8 @@ class Clients extends Component {
                     <option>Owner</option>
                 </select>
                 <input type="text" onChange={this.searchByCategory} />
-                <span className="nav">  <i class="fa fa-angle-left" onClick={this.backPage}></i> {this.state.indexStart}...{this.state.indexEnd} <i class="fa fa-angle-right" onClick={this.nextPage}></i></span>
+                <span className="nav">  <IoIosArrowDropleftCircle onClick={this.backPage}/> <h5>{this.state.indexStart}</h5><IoIosMore/><h5>{this.state.indexEnd}</h5>
+                 <IoIosArrowDroprightCircle onClick={this.nextPage}/></span>
                 <Table responsive striped bordered hover >
                     <thead>
                         <tr>
@@ -135,10 +154,9 @@ class Clients extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {console.log(" before render")}
 
-                        {this.state.showenClients.map(e => <ClientsDetails  id={e.id} item={e} show={this.showFirstPage} clients={this.props} />)}
-
+                        {this.state.showenClients.map(e => <ClientsDetails  id={e.id} item={e} 
+                         show={this.showFirstPage} changeUser={this.changeUser} clients={this.props} />)}
                     </tbody>
                 </Table>
 

@@ -30,6 +30,8 @@ table{
 }
 
 .nav{
+  display: inline;
+  float: right;
 align-items: center;
 }
 

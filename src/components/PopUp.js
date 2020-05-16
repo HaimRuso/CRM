@@ -24,7 +24,7 @@ class PopUp extends Component {
 
   }
 
-  updateClient = async ()=>{
+  updateClient =  ()=>{
     let changedClient ={
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -33,10 +33,8 @@ class PopUp extends Component {
       identifyEmail:this.props.email
     }
     console.log(changedClient)
-    await this.props.cs.updateClient(changedClient)
-    this.props.cs.getClients()
-    this.props.firstPage()
-
+    this.props.cs.updateClient(changedClient)
+    this.props.changeUser(changedClient)
   
   }
 
