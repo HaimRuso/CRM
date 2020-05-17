@@ -103,9 +103,37 @@ app.put('/changeClient', async function (req, res) {
   await sequelize.query(`UPDATE clients SET c_name='${req.body.firstName}',
   sname='${req.body.lastName}',email='${req.body.email}',country='${countryId}' WHERE email = '${req.body.identifyEmail}' `)
 })
+app.get('/topOwners', async function(req,res){
+  let owners=await sequelize.query(`SELECT o_name, count(o_name) FROM owners JOIN clients ON owners.id=clients.owner
+  WHERE clients.sale_status=true 
+  GROUP BY owners.o_name 
+  ORDER BY  count(o_name) DESC
+  LIMIT 3`)
+  
+  let first=Object.values(owners[0][0])
+  let second=Object.values(owners[0][1])
+  let third=Object.values(owners[0][2])
+  let ownersToSend={}
+  ownersToSend[first[0]]=first[1]
+  ownersToSend[second[0]]=second[1]
+  ownersToSend[third[0]]=third[1]
+  console.log(ownersToSend)
+  res.send(ownersToSend)
+})
 
 
-app.delete('/user', function (req, res) {
+app.get('/hotestCountry', async function(req,res){
+  let hot=await sequelize.query(`SELECT countries.country  FROM clients JOIN countries ON countries.id=clients.country 
+  WHERE sale_status=true
+  Group BY countries.country
+  ORDER BY count(countries.country) DESC
+  LIMIT 1 `)
+
+  res.send(hot[0][0].country)
+})
+app.delete('/deleteUser', async function (req, res) {
+  let email=req.body.source
+    await sequelize.query(`DELETE FROM clients WHERE email='${email}'`)
   res.send('Got a DELETE request at /user')
 })
 app.listen(port, () => console.log(`listening on port ${port}!`))

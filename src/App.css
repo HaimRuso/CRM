@@ -38,34 +38,25 @@ align-items: center;
 thead{
   background-color: rgb(245, 229, 5);
 }
-.action{
-  height: 100vh;
-  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
+
 .clients{
   min-height: 100vh;
   height: 100%;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
-.action{
+.analytics{
+  height: 100vh;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+/* .action{
   display: grid;
   grid-template-columns: repeat(2,1fr);
   grid-auto-rows: 100px 100px;
   grid-template-areas: 
   "a b";
   align-items: start;
-}
-.updateClient{
-  margin-top: 100px;
-  margin-left: 50px;
-  grid-area: b;
-}
-.addClient{
-  grid-area: a;
-  display: inline-block;
-  margin-left: 200px;
-  margin-bottom: 300px;
-}
+} */
+
 
 .buttonUpdate{
   display: inline-block;
@@ -108,4 +99,39 @@ display: inline;
 .countrySelect{
   margin-bottom: 0px !important;
 
+}
+
+.selectDrop {
+  margin-left: 10px;
+  width: 150px;
+  height: 30px;
+  text-align: center;
+}
+
+.actions{
+  display: grid;
+  grid-gap: 10px;
+  /* grid-auto-columns: minmax(100px, auto); */
+
+  grid-template-areas: 
+  "a b";
+  
+  grid-template-areas:
+  "c";
+   height: 100vh;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  
+}
+
+.updateClient{
+grid-area: 'b';
+}
+.addClient{
+  grid-area: 'a';
+ 
+}
+.deleteUser{
+  grid-area: 'c';
+justify-content: center;
+align-items: center;
 }

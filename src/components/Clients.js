@@ -7,6 +7,8 @@ import PopUp from './PopUp'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {IoIosArrowDroprightCircle, IoIosArrowDropleftCircle, IoIosMore} from "react-icons/io";
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 @inject('cs')
 @observer
@@ -111,6 +113,7 @@ class Clients extends Component {
         })
     }
     changeCategory=(e)=>{
+        console.log("sssssss")
         this.showFirstPage()
         this.setState({
             category:e.target.value
@@ -132,13 +135,14 @@ class Clients extends Component {
         
         return (
             <div className="clients" key="clients">
-                <select onChange={this.changeCategory} >
+                <select className="selectDrop" onChange={this.changeCategory} >
                     <option> Name</option>
                     <option> Surname</option>
                     <option>Country</option>
                     <option>Owner</option>
                 </select>
-                <input type="text" onChange={this.searchByCategory} />
+
+                <input  className='inputSearch' type="text" placeholder='Search' onChange={this.searchByCategory} />
                 <span className="nav">  <IoIosArrowDropleftCircle onClick={this.backPage}/> <h5>{this.state.indexStart}</h5><IoIosMore/><h5>{this.state.indexEnd}</h5>
                  <IoIosArrowDroprightCircle onClick={this.nextPage}/></span>
                 <Table responsive striped bordered hover >

@@ -1,9 +1,13 @@
 import { observable, action } from 'mobx'
 import axios from 'axios';
+import { toast } from 'react-toastify';
+toast.configure()
 
 export class actionStore{
     @observable owners=[]
     @observable countries=[]
+
+    
     @action getOwners=async ()=>{
         let owners= await axios.get(`http://localhost:4200/owners`)
          this.owners=owners.data[0]
@@ -20,5 +24,16 @@ export class actionStore{
     let result=await axios.put('http://localhost:4200/updateClient',updatedClinet)
     return result.data
   }
+
+  @action deleteUser=async (email)=>{
+    console.log(email)
+    axios.delete('http://localhost:4200/deleteUser', {
+
+      data: {
+        source: email
+      }
+    });
+
+}
 
 }
