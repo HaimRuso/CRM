@@ -4,6 +4,7 @@ import axios from 'axios';
 export class AnalyticsStore{
  @observable topOwners=[]
  @observable hotestCountry=""
+ @observable countries=[]
 
  
  @action getHotestCountry= async()=>{
@@ -11,6 +12,13 @@ export class AnalyticsStore{
     
     this.hotestCountry=hot.data
     console.log(this.hotestCountry)
+ }
+
+ @action getByCountries= async()=>{
+    let countries =await axios.get('http://localhost:4200/salesbycountry')
+   console.log(countries.data[0])
+    this.countries=[...countries.data[0]]
+
  }
  
  

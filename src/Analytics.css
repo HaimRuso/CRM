@@ -1,7 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
 .globus{
     border-color: yellow;
     color: tomato;
     margin-left: 100px;
     height: 80px;
     width: 80px;
+    display: inline;
+}
+
+.hotestCountry{
+
+}
+
+.outstandingIcon{
+    color: red;
+    height: 80px;
+    width: 80px;
+}
+
+.emailIcon{
+    height: 80px;
+    width: 80px;
+}
+
+.headerAnalytics{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.graphs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.sss{
+    font-family: 'Assistant';
+    font-style: italic;
+    font-weight: bold;
+    text-decoration: underline;
+
+    
 }

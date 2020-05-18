@@ -131,6 +131,26 @@ app.get('/hotestCountry', async function(req,res){
 
   res.send(hot[0][0].country)
 })
+
+app.get('/hotestCountry', async function(req,res){
+  let hot=await sequelize.query(`SELECT countries.country  FROM clients JOIN countries ON countries.id=clients.country 
+  WHERE sale_status=true
+  Group BY countries.country
+  ORDER BY count(countries.country) DESC
+  LIMIT 1 `)
+
+  res.send(hot[0][0].country)
+})
+
+app.get('/salesbycountry', async function(req,res){
+  let countries=await sequelize.query(`SELECT countries.country ,count(countries.country) AS number  FROM clients JOIN countries ON countries.id=clients.country 
+  WHERE sale_status=true
+  Group BY countries.country
+  ORDER BY count(countries.country) DESC
+  LIMIT 10
+  `)
+  res.send(Object.values(countries))
+})
 app.delete('/deleteUser', async function (req, res) {
   let email=req.body.source
     await sequelize.query(`DELETE FROM clients WHERE email='${email}'`)

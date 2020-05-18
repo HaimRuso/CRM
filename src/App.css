@@ -46,6 +46,7 @@ thead{
 }
 .analytics{
   height: 100vh;
+  height: 100%;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 /* .action{
@@ -111,27 +112,67 @@ display: inline;
 .actions{
   display: grid;
   grid-gap: 10px;
-  /* grid-auto-columns: minmax(100px, auto); */
-
   grid-template-areas: 
-  "a b";
-  
-  grid-template-areas:
-  "c";
+  "a  b"
+  "c  d";
+  padding:50px;
+
    height: 100vh;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
   
 }
 
 .updateClient{
 grid-area: 'b';
+width: 80%;
+background: #F2F2F2;
+border: 1px solid #ccc;
+box-shadow: 1px 1px 2px #fff inset,
+            -1px -1px 2px #fff inset;
+border-radius: 3px/6px; 
+padding:10px;
+-webkit-box-shadow: rgba(0, 0, 0,.30) 0 2px 3px;        
+  
 }
-.addClient{
+.container_addClinet{
   grid-area: 'a';
+  padding:10px;
+  width: 80%;
+  background: #F2F2F2;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px #fff inset,
+              -1px -1px 2px #fff inset;
+  border-radius: 3px/6px;         
+ 
+  -webkit-box-shadow: rgba(0, 0, 0,.30) 0 2px 3px;  
  
 }
 .deleteUser{
   grid-area: 'c';
 justify-content: center;
 align-items: center;
+width: 80%;
+background: #F2F2F2;
+border: 1px solid #ccc;
+box-shadow: 1px 1px 2px #fff inset,
+            -1px -1px 2px #fff inset;
+border-radius: 3px/6px;  
+padding:10px;       
+
+-webkit-box-shadow: rgba(0, 0, 0,.30) 0 2px 3px;  
+}
+.sendEmail{
+  grid-area: 'd';
+justify-content: center;
+align-items: center;
+background: #F2F2F2;
+border: 1px solid #ccc;
+box-shadow: 1px 1px 2px #fff inset,
+            -1px -1px 2px #fff inset;
+border-radius: 3px/6px;         
+padding:10px;
+width: 80%;
+
+-webkit-box-shadow: rgba(0, 0, 0,.30) 0 2px 3px;  
 }

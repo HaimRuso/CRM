@@ -17,8 +17,7 @@ class TopEmployees extends PureComponent {
     }
     render() {
       return (
-          <div>
-            <h4>Top Employees</h4>
+          <div className='topEmployee'>
         <ComposedChart
           layout="vertical"
           width={500}

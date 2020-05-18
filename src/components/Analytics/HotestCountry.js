@@ -11,8 +11,9 @@ class HotestCountry extends Component {
     render() {
         
         return (
-            <div>
-                <FaGlobeAmericas className='globus' /> <h1> {this.props.ans.hotestCountry}</h1>
+            <div className="hotestCountry">
+                <FaGlobeAmericas className='globus' /> 
+                <span className='sss' > Hotest Country: {this.props.ans.hotestCountry}</span>
             </div>
         );
     }

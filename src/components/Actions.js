@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'; 
 import DeleteUser from './Actions/DeleteUser'
 import UpdateClient from './Actions/UpdateClient';
+import Form from './Actions/Form'
 toast.configure()
 @inject('cs','as')
 @observer 
@@ -19,7 +20,7 @@ class Actions extends Component {
                 <AddClient/>
                 <UpdateClient handleInput={this.handleInput} this />
                 <DeleteUser/>
-
+                <Form/>
             </div>
         );
     }
